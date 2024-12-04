@@ -1,0 +1,67 @@
+name: Update data
+
+on:
+  pull_request:
+    branches: main
+    paths:
+      - "data/**"
+      - "scripts/**"
+  schedule:
+    - cron: "0 0 1 * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Debug dump
+        uses: crazy-max/ghaction-dump-context@v2
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: SSH debug
+        if: runner.debug == '1'
+        uses: mxschmitt/action-tmate@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache-dependency-path: "**/environment.yml"
+
+      - name: Set up Conda
+        uses: s-weigand/setup-conda@v1
+        with:
+          channels: bioconda, conda-forge
+
+      - name: Activate Conda
+        run: |
+          conda env create --file scripts/environment.yml
+          conda activate strchive
+
+      - name: SSH debug
+        if: runner.debug == '1'
+        uses: mxschmitt/action-tmate@v3
+
+      - name: Update data (short)
+        if: ${{ github.event_name == 'pull_request' }}
+        run: snakemake --config stages="skip-refs"
+
+      - name: Update data (full)
+        if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+        run: snakemake
+
+      - name: Open pull request with updated files
+        if: ${{ !(github.event_name == 'pull_request') }}
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: update-data
+          title: Update data
+
+      - name: Commit updated files to current pull request
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update data

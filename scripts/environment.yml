@@ -20,4 +20,4 @@ dependencies:
   - r-purrr
   - pip
   - pip:
-    - manubot
+      - manubot
