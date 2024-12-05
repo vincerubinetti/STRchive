@@ -47,7 +47,7 @@ jobs:
             // check version
             if (!valid(newVersion) || lt(newVersion, oldVersion))
               throw Error("Version not valid");
-            if (eq(oldVersion, newVersion) {
+            if (eq(oldVersion, newVersion)) {
               console.log("Version unchanged");
               return "";
             }
