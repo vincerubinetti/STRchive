@@ -18,7 +18,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2
 
       - name: Get previous version file
         run: git show HEAD~1:CITATION.cff >> CITATION-previous.cff
@@ -33,7 +33,7 @@ jobs:
           result-encoding: string
           script: |
             const { readFileSync, renameSync } = require("fs");
-            const { lte, valid } = require("semver");
+            const { valid, eq, lt } = require("semver");
             const { parse } = require("yaml");
             const { globSync } = require("glob");
 
@@ -41,12 +41,16 @@ jobs:
             const { version: newVersion } = parse(readFileSync("CITATION.cff").toString());
             const { version: oldVersion } = parse(readFileSync("CITATION-previous.cff").toString());
 
-            console.log("Old version:", oldVersion);
-            console.log("New version:", newVersion);
+            console.log(`Old version: ${oldVersion}`);
+            console.log(`New version: ${newVersion}`);
 
             // check version
-            if (!valid(newVersion)) throw Error("Version not valid");
-            if (lte(newVersion, oldVersion)) return;
+            if (!valid(newVersion) || lt(newVersion, oldVersion))
+              throw Error("Version not valid");
+            if (eq(oldVersion, newVersion) {
+              console.log("Version unchanged");
+              return "";
+            }
 
             // add version to artifact filenames
             for (const file of globSync("**/STRchive-*.json"))
