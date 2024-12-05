@@ -40,8 +40,9 @@ jobs:
 
       - name: Activate Conda
         run: |
-          conda init
           conda env create --file scripts/environment.yml
+          conda init
+          source ~/.zshrc
           conda activate strchive
 
       - name: Update data (short)
