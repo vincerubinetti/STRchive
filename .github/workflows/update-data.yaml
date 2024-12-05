@@ -38,7 +38,7 @@ jobs:
         run: |
           conda env create --file scripts/environment.yml
           conda init
-          source ~/.zshrc
+          source ~/.bashrc
           conda activate strchive
 
       - name: Update data (short)
