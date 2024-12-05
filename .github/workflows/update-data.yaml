@@ -21,10 +21,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: SSH debug
-        if: runner.debug == '1'
-        uses: mxschmitt/action-tmate@v3
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
