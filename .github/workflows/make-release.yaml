@@ -65,4 +65,4 @@ jobs:
           name: v${{ steps.version.outputs.result }}
           draft: true
           artifactErrorsFailBuild: true
-          artifacts: data/STRchive-loci.json,data/STRchive-citations.json,data/STRchive-disease-loci*.bed
+          artifacts: ./data/STRchive-loci.json,./data/STRchive-citations.json,./data/STRchive-disease-loci*.bed
