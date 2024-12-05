@@ -64,8 +64,11 @@ jobs:
         if: ${{ steps.version.outputs.result }}
         with:
           commit: ${{ github.ref }}
-          tag: v${{ steps.version.outputs.result }}
-          name: v${{ steps.version.outputs.result }}
+          tag: "v${{ steps.version.outputs.result }}"
+          name: "v${{ steps.version.outputs.result }}"
           draft: true
-          artifacts: "**/**/STRchive-loci.json,**/**/STRchive-citations.json,**/**/STRchive-disease-loci*.bed"
+          artifacts: |
+            data/STRchive-loci.json
+            data/STRchive-citations.json
+            data/STRchive-disease-loci*.bed
           artifactErrorsFailBuild: true
