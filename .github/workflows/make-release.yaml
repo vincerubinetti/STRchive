@@ -30,7 +30,7 @@ jobs:
       - name: Install packages
         run: npm install yaml@v2 semver@v7 glob@v11
 
-      - name: Get version and body
+      - name: Get version
         id: version
         uses: actions/github-script@v7
         with:
@@ -54,7 +54,7 @@ jobs:
             for (const file of globSync("data/STRchive-disease-loci*.bed"))
               renameSync(file, file.replace("-loci", `-loci_v${newVersion}_`));
 
-            return version;
+            return newVersion;
 
       - name: Create GitHub release
         uses: ncipollo/release-action@v1
