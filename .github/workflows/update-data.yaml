@@ -33,17 +33,16 @@ jobs:
 
       - name: Set up Conda
         uses: s-weigand/setup-conda@v1
-        with:
-          channels: bioconda, conda-forge
-
-      - name: Activate Conda
-        run: |
-          conda env create --file scripts/environment.yml
-          conda activate strchive
 
       - name: SSH debug
         if: runner.debug == '1'
         uses: mxschmitt/action-tmate@v3
+
+      - name: Activate Conda
+        run: |
+          conda init
+          conda env create --file scripts/environment.yml
+          conda activate strchive
 
       - name: Update data (short)
         if: ${{ github.event_name == 'pull_request' }}
