@@ -66,9 +66,7 @@ jobs:
           commit: ${{ github.ref }}
           tag: "v${{ steps.version.outputs.result }}"
           name: "v${{ steps.version.outputs.result }}"
-          draft: true
           artifacts: |
             /data/STRchive-loci.json
             /data/STRchive-citations.json
             /data/STRchive-disease-loci*.bed
-          artifactErrorsFailBuild: true
