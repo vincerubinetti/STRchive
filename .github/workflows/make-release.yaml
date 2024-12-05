@@ -60,7 +60,7 @@ jobs:
             return newVersion;
 
       - name: Create GitHub release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1.14.0
         if: ${{ steps.version.outputs.result }}
         with:
           commit: ${{ github.ref }}
@@ -68,7 +68,7 @@ jobs:
           name: "v${{ steps.version.outputs.result }}"
           draft: true
           artifacts: |
-            ../../data/STRchive-loci.json
-            ../../data/STRchive-citations.json
-            ../../data/STRchive-disease-loci*.bed
+            data/STRchive-loci.json
+            data/STRchive-citations.json
+            data/STRchive-disease-loci*.bed
           artifactErrorsFailBuild: true
