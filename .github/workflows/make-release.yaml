@@ -49,9 +49,9 @@ jobs:
             if (lte(newVersion, oldVersion)) return;
 
             // add version to artifact filenames
-            for (const file of globSync("data/STRchive-*.json"))
+            for (const file of globSync("**/STRchive-*.json"))
               renameSync(file, file.replace(".json", `_v${newVersion}.json`));
-            for (const file of globSync("data/STRchive-disease-loci*.bed"))
+            for (const file of globSync("**/STRchive-disease-loci*.bed"))
               renameSync(file, file.replace("-loci", `-loci_v${newVersion}_`));
 
             return newVersion;
@@ -66,6 +66,6 @@ jobs:
         with:
           tag_name: v${{ steps.version.outputs.result }}
           files: |
-            data/STRchive-loci.json
-            data/STRchive-citations.json
-            data/STRchive-disease-loci*.bed
+            **/STRchive-loci*.json
+            **/STRchive-citations*.json
+            **/STRchive-disease-loci*.bed
