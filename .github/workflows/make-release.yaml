@@ -20,15 +20,15 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: SSH debug
-        if: runner.debug == '1'
-        uses: mxschmitt/action-tmate@v3
-
       - name: Get previous version file
         run: git show HEAD~1:CITATION.cff >> CITATION-previous.cff
 
       - name: Install packages
         run: npm install yaml@v2 semver@v7 glob@v11
+
+      - name: SSH debug
+        if: runner.debug == '1'
+        uses: mxschmitt/action-tmate@v3
 
       - name: Get version
         id: version
@@ -68,7 +68,7 @@ jobs:
           name: "v${{ steps.version.outputs.result }}"
           draft: true
           artifacts: |
-            data/STRchive-loci.json
-            data/STRchive-citations.json
-            data/STRchive-disease-loci*.bed
+            ../../data/STRchive-loci.json
+            ../../data/STRchive-citations.json
+            ../../data/STRchive-disease-loci*.bed
           artifactErrorsFailBuild: true
